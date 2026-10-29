@@ -22,8 +22,7 @@ typecheck:
 	bun run typecheck
 
 setup:
-	@if [ ! -f opencode.json ]; then cp opencode.json.example opencode.json && echo "created opencode.json (edit placeholders)"; else echo "opencode.json already exists"; fi
-	@if [ ! -f .env ]; then cp .env.example .env && echo "created .env (set ORCAROUTER_API_KEY)"; else echo ".env already exists"; fi
+	@bash scripts/setup.sh
 
 clean:
 	rm -rf eval/challenges/bin eval/challenges/flag.txt .habakiri
