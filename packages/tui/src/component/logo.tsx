@@ -1,9 +1,8 @@
-import { RGBA, TextAttributes } from "@opentui/core"
+import { RGBA } from "@opentui/core"
 import { For, type JSX } from "solid-js"
 import { useTerminalDimensions } from "@opentui/solid"
 import { useTheme } from "../context/theme"
-import { tint } from "../theme/color"
-import { habakiri, go } from "../logo"
+import { habakiri } from "../logo"
 
 // Blue gradient for the HABAKIRI wordmark (top -> bottom).
 const HABAKIRI_GRADIENT = [
