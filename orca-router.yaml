@@ -1,0 +1,37 @@
+version: 1
+phases:
+  triage:
+    model: "orca/orcacyber-flash-1.0"
+    budget_usd: 0.50
+    max_steps: 15
+    temperature: 0.2
+    context_budget: 131072
+    fallback: audit
+  audit:
+    model: "orca/orcacyber-zero-1.5"
+    budget_usd: 2.00
+    max_steps: 40
+    temperature: 0.3
+    context_budget: 262144
+  exploit:
+    model: "orca/orcacyber-ultra-1.0"
+    budget_usd: 5.00
+    max_steps: 40
+    temperature: 0.4
+    context_budget: 262144
+    on_verify_failures: 3
+  verify:
+    model: "orca/orcacyber-ultra-1.0"
+    budget_usd: 1.00
+    max_steps: 10
+    temperature: 0.1
+    context_budget: 131072
+session_budget_usd: 10.00
+prices_usd_per_mtok:
+  "orca/orcacyber-flash-1.0":  { input: 0.70, output: 1.60 }
+  "orca/orcacyber-zero-1.5":   { input: 3.00, output: 7.50 }
+  "orca/orcacyber-ultra-1.0": { input: 5.00, output: 10.00 }
+tool_output:
+  summary_max_lines: 200
+  summary_max_bytes: 16384
+  artifacts_dir: ".habakiri/artifacts"
