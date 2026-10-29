@@ -80,6 +80,26 @@ cd packages/opencode && bun run typecheck
 cd packages/session-ui && bun run typecheck
 ```
 
+## モデル割り当ての変更
+
+エージェントごとのモデルは `opencode.json`（`agent.<name>.model`）と `orca-router.yaml`（`phases.<phase>.model`）および `.opencode/agent/<name>.md` の `model:` フィールドで定義されています。無料モデルに切り替える例:
+
+```json
+// opencode.json
+"agent": {
+  "audit": { "model": "orcarouter/orca/orcacyber-minimax-m3.1-flash-free" }
+}
+```
+
+```yaml
+# orca-router.yaml
+phases:
+  audit:
+    model: "orca/orcacyber-minimax-m3.1-flash-free"
+```
+
+利用可能な OrcaRouter モデル一覧は `/habakiri-models` コマンドで確認できます。インタラクティブな設定 UI は Phase 3 で予定しています。
+
 ## ライセンスと関係性について
 
 - 上流の OpenCode は MIT License であり、本プロジェクトはそのフォークである。本プロジェクト自体のライセンスは設計書 §12 の方針に従い、公開時に本ファイルへ明記する。
