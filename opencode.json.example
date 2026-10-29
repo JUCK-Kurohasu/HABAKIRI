@@ -9,22 +9,22 @@
         "apiKey": "{env:ORCAROUTER_API_KEY}"
       },
       "models": {
-        "__MODEL_ID_TRIAGE__": {
+        "orca/orcacyber-flash-1.0": {
           "name": "DeepSeek V4.1 Flash Abliterated (triage)",
           "limit": { "context": 131072, "output": 16384 }
         },
-        "__MODEL_ID_AUDIT__": {
+        "orca/orcacyber-zero-1.5": {
           "name": "OrcaCyber Zero 1.5 (audit)",
           "limit": { "context": 262144, "output": 32768 }
         },
-        "__MODEL_ID_EXPLOIT__": {
+        "orca/orcacyber-ultra-1.0": {
           "name": "OrcaCyber Ultra 1.0 (exploit)",
           "limit": { "context": 262144, "output": 32768 }
         }
       }
     }
   },
-  "model": "orcarouter/__MODEL_ID_AUDIT__",
+  "model": "orcarouter/orca/orcacyber-zero-1.5",
   "permission": {
     "bash": "ask",
     "edit": "ask",

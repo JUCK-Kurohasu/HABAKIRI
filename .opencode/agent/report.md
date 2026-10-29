@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: orcarouter/__MODEL_ID_AUDIT__
+model: orcarouter/orca/orcacyber-zero-1.5
 description: "Report phase: format verified findings into a report (OrcaCyber Zero 1.5)"
 color: "#16A085"
 steps: 10

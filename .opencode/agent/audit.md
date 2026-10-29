@@ -1,6 +1,6 @@
 ---
 mode: primary
-model: orcarouter/__MODEL_ID_AUDIT__
+model: orcarouter/orca/orcacyber-zero-1.5
 description: "Audit phase: code audit, first PoC draft, extraction scripts (OrcaCyber Zero 1.5)"
 color: "#2980B9"
 steps: 40

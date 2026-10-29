@@ -1,6 +1,6 @@
 ---
 mode: subagent
-model: orcarouter/__MODEL_ID_EXPLOIT__
+model: orcarouter/orca/orcacyber-ultra-1.0
 description: "Verify phase: independent review of other agents' output (OrcaCyber Ultra 1.0)"
 color: "#8E44AD"
 steps: 10

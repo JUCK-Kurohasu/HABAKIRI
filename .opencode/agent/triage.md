@@ -1,6 +1,6 @@
 ---
 mode: primary
-model: orcarouter/__MODEL_ID_TRIAGE__
+model: orcarouter/orca/orcacyber-flash-1.0
 description: "Triage phase: large-scale sorting, crash first-pass classification, log summarization (DeepSeek Abliterated)"
 color: "#44BA81"
 steps: 15
