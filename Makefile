@@ -10,7 +10,7 @@ help:
 	@echo "  make clean      - remove eval artifacts"
 
 dev:
-	bun run dev
+	bun run --env-file=.env dev
 
 dev-web:
 	bun run dev:web
