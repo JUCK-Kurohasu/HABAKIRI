@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "orcarouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OrcaRouter (Cyber Tier)",
+      "options": {
+        "baseURL": "https://api.orcarouter.ai/v1",
+        "apiKey": "{env:ORCAROUTER_API_KEY}"
+      },
+      "models": {
+        "__MODEL_ID_TRIAGE__": {
+          "name": "DeepSeek V4.1 Flash Abliterated (triage)",
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "__MODEL_ID_AUDIT__": {
+          "name": "OrcaCyber Zero 1.5 (audit)",
+          "limit": { "context": 262144, "output": 32768 }
+        },
+        "__MODEL_ID_EXPLOIT__": {
+          "name": "OrcaCyber Ultra 1.0 (exploit)",
+          "limit": { "context": 262144, "output": 32768 }
+        }
+      }
+    }
+  },
+  "model": "orcarouter/__MODEL_ID_AUDIT__",
+  "permission": {
+    "bash": "ask",
+    "edit": "ask",
+    "webfetch": "ask"
+  }
+}
