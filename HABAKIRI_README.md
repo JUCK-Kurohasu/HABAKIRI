@@ -90,6 +90,21 @@ bun run dev service set env ORCAROUTER_API_KEY "<your-key>"
 "agent": { "audit": { "model": "orcarouter/orca/orcacyber-minimax-m3.1-flash-free" } }
 ```
 
+## モード別システムプロンプト
+各モードのシステムプロンプトは `.opencode/agent/<mode>.md` の本文に定義され、起動時に自動で読み込まれます。モードごとに立脚点（stance）・作業手順・出力契約・引き継ぎ先を変えています。
+
+| モード | ファイル | モデル | 立脚点（要約） |
+|---|---|---|---|
+| triage | `.opencode/agent/triage.md` | orcacyber-flash-1.0 | 高速・低コストの一次仕分け。1パスで分類し、根拠付きで audit に引き継ぐ。エクスプロイトは書かない |
+| audit | `.opencode/agent/audit.md` | orcacyber-zero-1.5 | 解析の中核。入力からシンクまで追跡し、プリミティブを特定して最初の PoC を作る。推測は仮説と明記 |
+| exploit | `.opencode/agent/exploit.md` | orcacyber-ultra-1.0 | **攻撃側を既定とする**。認可スコープ内では遠慮・留保せず、ROP/JOP、ヒープグルーミング、ASLR/PIE/NX 回避、認証バイパス、権限昇格、サンドボックス脱出まで攻め切る。妨害は工学的问题として突破する |
+| verify | `.opencode/agent/verify.md` | orcacyber-ultra-1.0 | 敵対的レビュアー。証拠が再現できるまで誤りとみなし、PASS/FAIL を出す。FAIL を PASS に緩めない |
+| report | `.opencode/agent/report.md` | orcacyber-zero-1.5 | 検証済み所見だけを提出品質のレポートに整形。未検証項目は別節に分離 |
+
+**共通の境界線**（`HABAKIRI_DESIGN.md` §1.3 と同一）: 認可されたラボ・CTF・スコープ内バグバウンティ・公開脆弱性の再現に限定。第三者への無許諾攻撃、実データの外部送信、実運用可能な兵器としての配布は行わない。対象バイナリの実行は `poc_verify` 経由のみ。
+
+プロンプトを変えたい場合は該当ファイルの frontmatter（`model` / `temperature` / `permission`）と本文を編集し、OpenCode を再起動します。リポジトリ外の任意ディレクトリでも同じモードを使いたい場合は、5 ファイルを `~/.config/opencode/agent/` にコピーしてください（プロジェクト側の定義が優先されます）。
+
 ## ライセンスと関係性
 - 上流の OpenCode は MIT License。本プロジェクトはそのフォーク。
 - OpenCode チームの製品ではなく、提携関係もない。OrcaRouter 公式の製品でもない。
