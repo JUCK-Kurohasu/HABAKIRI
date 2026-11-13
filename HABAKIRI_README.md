@@ -57,13 +57,16 @@ Bun は `.env` を自動ロードします。API キーの export は不要で�
 | OpenCode | 主開発（フォーク本体の実装、テスト） |
 | Claude | 日本語ドキュメント生成と細かな修正 |
 
-## モデル割り当ての変更
-エージェントごとのモデルは `opencode.json`（`agent.<name>.model`）と `orca-router.yaml`（`phases.<phase>.model`）で定義。利用可能なモデル一覧は `/habakiri-models` コマンドで確認。無料モデルへの切り替え例:
+## モデル割り当て（v2 マトリクス）
 
-```json
-// opencode.json
-"agent": { "audit": { "model": "orcarouter/orca/orcacyber-minimax-m3.1-flash-free" } }
-```
+| 局面 | デフォルト | 代替（コスト最適化） | 無料フォールバック |
+|---|---|---|---|
+| triage | `orca/orcacyber-hy4` ($0.80/$1.60, Q9) | `orca/orcacyber-flash-1.0` ($0.80/$1.60, Q8) | `orca/orcacyber-minimax-m3.1-flash-free` (Q9) |
+| audit | `orca/orcacyber-zero-1.5` ($3.00/$7.50, Q9) | `orca/orcacyber-glm-5.3` ($3.00/$5.00, Q9) | `orca/orcacyber-glm-5.3-flash-free` (Q8) |
+| exploit | `orca/orcacyber-ultra-1.0` ($5.00/$10.00, Q9) | — | — |
+| verify | `orca/orcacyber-ultra-1.0` ($5.00/$10.00, Q9) | — | — |
+
+変更方法: `opencode.json` の `agent.<name>.model` と `orca-router.yaml` の `phases.<phase>.model` を更新。`/habakiri-models` コマンドで一覧確認。
 
 ## ライセンスと関係性
 - 上流の OpenCode は MIT License。本プロジェクトはそのフォーク。
