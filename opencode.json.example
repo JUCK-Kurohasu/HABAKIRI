@@ -9,6 +9,9 @@
         "apiKey": "{env:ORCAROUTER_API_KEY}"
       },
       "models": {
+        "orcarouter/cyber-auto": {
+          "name": "OrcaRouter Cyber Auto (default)"
+        },
         "orca/orcacyber-flash-1.0": {
           "name": "DeepSeek V4.1 Flash Abliterated (triage)",
           "limit": { "context": 131072, "output": 16384 }
@@ -24,7 +27,7 @@
       }
     }
   },
-  "model": "orcarouter/orca/orcacyber-zero-1.5",
+  "model": "orcarouter/orcarouter/cyber-auto",
   "permission": {
     "bash": "ask",
     "edit": "ask",

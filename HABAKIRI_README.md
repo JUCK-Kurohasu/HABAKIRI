@@ -50,7 +50,7 @@ make dev-web
 ## トラブルシューティング
 
 ### モデルが BigPickle になる
-設定した `model`（`orcarouter/orca/orcacyber-zero-1.5`）が有効な設定ファイルに無いと、OpenCode 既定の BigPickle にフォールバックします。
+設定した `model`（既定は `orcarouter/orcarouter/cyber-auto`）が有効な設定ファイルに無いと、OpenCode 既定の BigPickle にフォールバックします。
 
 | 確認 | 対処 |
 |---|---|
@@ -106,6 +106,8 @@ bun run --env-file=.env scripts/sync-orca-models.ts --write   # 同上（Windows
 - 追加されたエントリは `limit` 未設定のため、context 200000 / output 32000 の既定値になります。実際の上限に合わせて `limit` を書き足してください。
 - カタログに既にある `orcarouter/auto` などが追加されることがありますが、害はありません。
 - 表示される `+ orcarouter/...` が、`model` や `agent.<name>.model`、`.opencode/agent/*.md` の `model:`、`--model` にそのまま使える参照名です。モデル ID は `orcarouter/cyber-auto` でも、参照名はプロバイダ名が付いて `orcarouter/orcarouter/cyber-auto` になります。`orcarouter/cyber-auto` と書くとモデルが見つからず、エラーなしで別のモデルにフォールバックします。
+- `opencode.json` の `models` のキーは、`/v1/models` が返す**生の ID**（例: `orcarouter/cyber-auto`）です。プロバイダ名を足した参照名をキーにすると、API に存在しない ID が送られます。
+- `provider`（単数形）と `providers`（複数形）を同じファイルに書かないでください。両方に `orcarouter` があると複数形側だけが採用され、単数形側のモデルは読み込まれません。同様に、権限は `permission`（単数形、オブジェクト）で書きます。`permissions`（複数形）は配列形式で、オブジェクトを書くと無視され、`ask` が効きません。スクリプトは `providers` を検出すると書き込まずに終了します。
 
 ## ライセンスと関係性
 - 上流の OpenCode は MIT License。本プロジェクトはそのフォーク。

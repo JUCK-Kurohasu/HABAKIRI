@@ -10,6 +10,7 @@ const file = "opencode.json"
 
 type Config = {
   provider?: Record<string, { models?: Record<string, object> }>
+  providers?: unknown
 }
 
 if (!key) {
@@ -18,6 +19,17 @@ if (!key) {
 }
 if (!(await Bun.file(file).exists())) {
   console.error(`${file} not found in ${process.cwd()}; run \`make setup\` first`)
+  process.exit(1)
+}
+
+const config: Config = await Bun.file(file).json()
+// `provider` (v1 form) and `providers` (v2 form) both define orcarouter: the v2 entry replaces the whole v1 one,
+// so models written here would silently not load.
+if (config.providers !== undefined) {
+  console.error(
+    `${file} has a \`providers\` key. This script writes to \`provider\`, and the two conflict. ` +
+      "Move the orcarouter entry into `provider` (see opencode.json.example), then re-run.",
+  )
   process.exit(1)
 }
 
@@ -38,7 +50,6 @@ if (remote.length === 0) {
   process.exit(1)
 }
 
-const config: Config = await Bun.file(file).json()
 const models = (((config.provider ??= {}).orcarouter ??= {}).models ??= {})
 const added = remote.filter((id) => (id.startsWith("orca/") || id.startsWith("orcarouter/")) && !(id in models))
 const missing = Object.keys(models).filter((id) => !remote.includes(id))
@@ -46,6 +57,8 @@ const missing = Object.keys(models).filter((id) => !remote.includes(id))
 // Model references are `<provider>/<model id>`, so ids that start with `orcarouter/` end up doubled.
 added.forEach((id) => console.log(`+ orcarouter/${id}`))
 missing.forEach((id) => console.log(`? orcarouter/${id} (configured, but not in /v1/models)`))
+if (missing.length > 0)
+  console.log("Note: keys in opencode.json are the raw ids from /v1/models, without the provider prefix.")
 console.log(
   `${remote.length} models on the server, ${added.length} to add, ${missing.length} configured but not listed`,
 )
