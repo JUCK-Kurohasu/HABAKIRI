@@ -43,8 +43,9 @@ const models = (((config.provider ??= {}).orcarouter ??= {}).models ??= {})
 const added = remote.filter((id) => (id.startsWith("orca/") || id.startsWith("orcarouter/")) && !(id in models))
 const missing = Object.keys(models).filter((id) => !remote.includes(id))
 
-added.forEach((id) => console.log(`+ ${id}`))
-missing.forEach((id) => console.log(`? ${id} (configured, but not in /v1/models)`))
+// Model references are `<provider>/<model id>`, so ids that start with `orcarouter/` end up doubled.
+added.forEach((id) => console.log(`+ orcarouter/${id}`))
+missing.forEach((id) => console.log(`? orcarouter/${id} (configured, but not in /v1/models)`))
 console.log(
   `${remote.length} models on the server, ${added.length} to add, ${missing.length} configured but not listed`,
 )
