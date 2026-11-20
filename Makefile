@@ -1,4 +1,4 @@
-.PHONY: help dev dev-web build typecheck setup restart check clean
+.PHONY: help dev dev-web build typecheck setup restart check sync-models clean
 
 help:
 	@echo "HABAKIRI make targets:"
@@ -9,6 +9,7 @@ help:
 	@echo "  make setup      - copy opencode.json.example -> opencode.json"
 	@echo "  make restart    - restart background service with .env (use after changing the API key)"
 	@echo "  make check      - warn about missing opencode.json / API key"
+	@echo "  make sync-models - add new OrcaRouter models from /v1/models to opencode.json"
 	@echo "  make clean      - remove eval artifacts"
 
 dev: check
@@ -36,6 +37,10 @@ restart:
 check:
 	@test -f opencode.json || echo "WARN: opencode.json not found. Run 'make setup', otherwise the default model (BigPickle) is used."
 	@grep -Eq '^ORCAROUTER_API_KEY=.+' .env 2>/dev/null && ! grep -q 'sk-your-key-here' .env || echo "WARN: ORCAROUTER_API_KEY is missing or still the placeholder in .env."
+
+# Needs network access to api.orcarouter.ai and ORCAROUTER_API_KEY. Run the script without --write to preview.
+sync-models:
+	bun run --env-file=.env scripts/sync-orca-models.ts --write
 
 clean:
 	rm -rf eval/challenges/bin eval/challenges/flag.txt .habakiri
