@@ -105,6 +105,7 @@ bun run --env-file=.env scripts/sync-orca-models.ts --write   # 同上（Windows
 - 既存のエントリは変更しません。書き込み時に `opencode.json` は整形し直されます。
 - 追加されたエントリは `limit` 未設定のため、context 200000 / output 32000 の既定値になります。実際の上限に合わせて `limit` を書き足してください。
 - カタログに既にある `orcarouter/auto` などが追加されることがありますが、害はありません。
+- 表示される `+ orcarouter/...` が、`model` や `agent.<name>.model`、`.opencode/agent/*.md` の `model:`、`--model` にそのまま使える参照名です。モデル ID は `orcarouter/cyber-auto` でも、参照名はプロバイダ名が付いて `orcarouter/orcarouter/cyber-auto` になります。`orcarouter/cyber-auto` と書くとモデルが見つからず、エラーなしで別のモデルにフォールバックします。
 
 ## ライセンスと関係性
 - 上流の OpenCode は MIT License。本プロジェクトはそのフォーク。
