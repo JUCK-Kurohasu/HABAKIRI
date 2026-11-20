@@ -68,6 +68,19 @@ Bun は `.env` を自動ロードします。API キーの export は不要で�
 
 変更方法: `opencode.json` の `agent.<name>.model` と `orca-router.yaml` の `phases.<phase>.model` を更新。`/habakiri-models` コマンドで一覧確認。
 
+### 最新モデルの取り込み
+汎用モデル（`openai/*`、`anthropic/*` など）はモデルカタログ経由で自動的に一覧へ出ます。カタログに無い `orca/*`（サイバー系）と `orcarouter/*` の別名だけは、`opencode.json` への登録が必要です。`/v1/models` から不足分を追加するスクリプトを用意しています（要 `ORCAROUTER_API_KEY` とネットワーク接続）。
+
+```bash
+bun run --env-file=.env scripts/sync-orca-models.ts           # 追加される ID の確認のみ（書き込まない）
+make sync-models                                              # opencode.json に書き込み（Unix / WSL）
+bun run --env-file=.env scripts/sync-orca-models.ts --write   # 同上（Windows）
+```
+
+- 既存のエントリは変更しません。書き込み時に `opencode.json` は整形し直されます。
+- 追加されたエントリは `limit` 未設定のため、context 200000 / output 32000 の既定値になります。実際の上限に合わせて `limit` を書き足してください。
+- カタログに既にある `orcarouter/auto` などが追加されることがありますが、害はありません。
+
 ## ライセンスと関係性
 - 上流の OpenCode は MIT License。本プロジェクトはそのフォーク。
 - OpenCode チームの製品ではなく、提携関係もない。OrcaRouter 公式の製品でもない。

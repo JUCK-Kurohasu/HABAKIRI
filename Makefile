@@ -24,5 +24,9 @@ typecheck:
 setup:
 	@bash scripts/setup.sh
 
+# Needs network access to api.orcarouter.ai and ORCAROUTER_API_KEY. Run the script without --write to preview.
+sync-models:
+	bun run --env-file=.env scripts/sync-orca-models.ts --write
+
 clean:
 	rm -rf eval/challenges/bin eval/challenges/flag.txt .habakiri
